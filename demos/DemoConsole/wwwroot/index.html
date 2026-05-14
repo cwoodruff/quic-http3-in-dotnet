@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QUIC &amp; HTTP/3 — live demos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>QUIC &amp; HTTP/3 — live demos</h1>
+    <div class="pills">
+      <span class="pill" id="pill-http3"><span class="dot"></span> HTTP/3 listener :5051</span>
+      <span class="pill" id="pill-quic"><span class="dot"></span> QUIC server :5002</span>
+    </div>
+  </header>
+
+  <div class="caption" id="caption">Press <kbd>1</kbd>, <kbd>2</kbd>, or <kbd>3</kbd> to run a demo. <kbd>c</kbd> clears.</div>
+
+  <div class="buttons">
+    <button class="btn btn-http2" data-key="1" data-demo="http2">
+      <span class="key">1</span>
+      <span class="label">HTTP/2 request</span>
+      <span class="sub">slide 14 — shows alt-svc upgrade header</span>
+    </button>
+    <button class="btn btn-http3" data-key="2" data-demo="http3">
+      <span class="key">2</span>
+      <span class="label">HTTP/3 request</span>
+      <span class="sub">slide 14 — negotiates QUIC, or falls back</span>
+    </button>
+    <button class="btn btn-multiplex" data-key="3" data-demo="multiplex">
+      <span class="key">3</span>
+      <span class="label">Multiplexed transfer</span>
+      <span class="sub">slide 18 — heartbeat + 200 MB on one connection</span>
+    </button>
+    <button class="btn btn-clear" data-key="c" id="btn-clear">
+      <span class="key">c</span>
+      <span class="label">Clear</span>
+    </button>
+  </div>
+
+  <main id="output" class="output empty">
+    <div class="placeholder">No demo running.</div>
+  </main>
+
+  <template id="tpl-http-card">
+    <div class="http-card">
+      <div class="http-card-row http-card-status">
+        <span class="lbl">Status</span>
+        <span class="val status"></span>
+      </div>
+      <div class="http-card-row http-card-protocol">
+        <span class="lbl">Negotiated</span>
+        <span class="val protocol"></span>
+      </div>
+      <div class="http-card-row http-card-requested">
+        <span class="lbl">Requested</span>
+        <span class="val requested"></span>
+      </div>
+      <div class="http-card-row http-card-altsvc">
+        <span class="lbl">alt-svc</span>
+        <span class="val altsvc"></span>
+      </div>
+      <div class="http-card-row http-card-body">
+        <span class="lbl">Body</span>
+        <pre class="val body"></pre>
+      </div>
+      <div class="http-card-row http-card-elapsed">
+        <span class="lbl">Elapsed</span>
+        <span class="val elapsed"></span>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-multiplex">
+    <div class="multiplex">
+      <section class="panel panel-heartbeat">
+        <header class="panel-header">Heartbeat stream</header>
+        <ol class="panel-log"></ol>
+      </section>
+      <section class="panel panel-file">
+        <header class="panel-header">File stream</header>
+        <ol class="panel-log"></ol>
+        <div class="panel-progress">
+          <div class="bar"></div>
+          <div class="bar-label">0 / 200 MB</div>
+        </div>
+      </section>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
